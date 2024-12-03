@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String hiddenWord = "encyclopedia";
+        char[] guessedWord = new char[hiddenWord.length()];
+        for (int i = 0; i < guessedWord.length; i++) {
+            guessedWord[i] = '*';
+        }
+
+        int lives = 3;
+        int mistakes = 0;
+        Scanner scanner = new Scanner(System.in);
+
+        while (mistakes < 4 && new String(guessedWord).contains("*")) {
+            System.out.println("Hidden word is made up of 11 letters (" + lives + " lives remaining)");
+            System.out.println(guessedWord);
+            System.out.print("Guess the letter: ");
+            char guess = scanner.next().charAt(0);
+
+            boolean correctGuess = false;
+            for (int i = 0; i < hiddenWord.length(); i++) {
+                if (hiddenWord.charAt(i) == guess) {
+                    guessedWord[i] = guess;
+                    correctGuess = true;
+                }
+            }
+
+            if (!correctGuess) {
+                mistakes++;
+                lives--;
+                System.out.println("Incorrect guess! Lives remaining: " + lives);
+            }
+
+            if (new String(guessedWord).equals(hiddenWord)) {
+                System.out.println("You win!");
+                break;
+            }
+        }
+
+        if (mistakes == 4) {
+            System.out.println("Game over! The hidden word was: " + hiddenWord);
+        }
+
+        scanner.close();
+    }
+}
